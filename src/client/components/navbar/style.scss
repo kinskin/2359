@@ -1,0 +1,23 @@
+.navigation{
+	display: flex;
+	flex-direction: row;
+	font-size: 24px;
+	margin:20px 0;
+	border-bottom: 1px solid grey;
+	.appName{
+		display: flex;
+		flex-direction: row;
+		margin:0 30px;
+		}
+	.navbar{
+		display: flex;
+		flex-direction: row;
+		p{
+			margin:0 30px;
+		}
+		p:hover{
+			cursor:pointer;
+			color:lightcoral;
+		}
+	}
+}
