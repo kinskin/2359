@@ -1,0 +1,16 @@
+.inputBox{
+	height:5rem;
+	width:40rem;
+	border:transparent;
+	border-bottom:1px solid grey;
+	font-size: 24px;
+}
+
+.inputBox:focus{
+	outline:none;
+}
+
+.inputBox::placeholder{
+	text-align: center;
+	font-size: 24px;
+}

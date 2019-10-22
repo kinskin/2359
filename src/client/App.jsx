@@ -3,6 +3,8 @@ import { hot } from 'react-hot-loader';
 
 
 import Navbar from './components/navbar/navbar.jsx';
+import Search from './components/search/search.jsx';
+import Favourites from './components/favourites/favourites.jsx';
 
 class App extends React.Component {
     constructor() {
