@@ -3,8 +3,9 @@ import style from './style.scss';
 
 export default class Display extends React.Component{
 
+
     clickHandler(){
-        console.log(event.target.id)
+        this.props.favouriteId(event.target.id)
     }
 
     render(){
@@ -14,15 +15,15 @@ export default class Display extends React.Component{
             results = this.props.searchResult.map((result,index)=>{
                 let path = result.images['480w_still'].url
                 return(
-                    <div className={style.frame} key={index} >
-                        <img src={path} onClick={()=>{this.clickHandler()}}/>
-                        <div className={style.overlay} id={result.id}></div>
+                    <div className={style.frame} key={index}>
+                        <img className={style.img}src={path} id={result.id} onClick={()=>{this.clickHandler()}}/>
+                        <div className={style.baseHeart}></div>
                     </div>
                 )
             })
         }
         return(
-            <div className='d-flex flex-wrap justify-content-center my-3'>
+            <div className='d-flex flex-wrap justify-content-center'>
                 {results}
             </div>
         )

@@ -11,8 +11,16 @@ class App extends React.Component {
         super();
         this.state = {
           showSearch: true,
-          showFavourites:false
+          showFavourites:false,
+          favouritesLength: 0,
         };
+    }
+
+    componentDidMount(){
+        let favouritesId = JSON.parse(localStorage.getItem('favouritesId'))
+        if( favouritesId !== null){
+            this.setState({favouritesLength: favouritesId.length})
+        }
     }
 
     searchHandler(){
@@ -29,11 +37,15 @@ class App extends React.Component {
         });
     };
 
+    favouritesLength(value){
+        this.setState({favouritesLength: value.length})
+    }
+
     render() {
 
         let display;
         if(this.state.showSearch === true && this.state.showFavourites === false){
-            display = <Search />;
+            display = <Search favouritesLength={(value)=>{this.favouritesLength(value)}}/>;
         } else {
             display = <Favourites />;
         }
@@ -42,7 +54,8 @@ class App extends React.Component {
             <div className='container'>
                 <Navbar
                     searchHandler={()=>this.searchHandler()}
-                    favouritesHandler={()=>this.favouritesHandler()}>
+                    favouritesHandler={()=>this.favouritesHandler()}
+                    favourites={this.state.favouritesLength}>
                 </Navbar>
                 {display}
             </div>

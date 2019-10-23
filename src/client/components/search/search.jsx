@@ -11,7 +11,17 @@ export default class Search extends React.Component{
         this.state = {
             searchValue: '',
             apiKey: '7i4KgSemwP8WZSYtPePlpVoVbJeHE8EO',
-            searchResult: ''
+            searchResult: '',
+            favouritesId: []
+        }
+    }
+
+    componentDidMount(){
+        let favouritesId = JSON.parse(localStorage.getItem('favouritesId'))
+        if(favouritesId !== null){
+            this.setState({favouritesId: favouritesId},()=>{
+                this.favouritesLength()
+            })
         }
     }
 
@@ -41,13 +51,35 @@ export default class Search extends React.Component{
         .catch(err => console.log('error: ', err))
     }
 
+    favouriteId(id){
+        let favouritesId = this.state.favouritesId
+        let favouriteIndex = favouritesId.findIndex(favourite=>favourite===id)
+        if(favouriteIndex === -1){
+            favouritesId.push(id)
+            this.setState({favouritesId:favouritesId},()=>{
+                localStorage.setItem('favouritesId', JSON.stringify(this.state.favouritesId))
+                this.favouritesLength()
+            })
+        }
+        else{
+            favouritesId.splice(favouriteIndex,1)
+            this.setState({favouritesId:favouritesId},()=>{
+                localStorage.setItem('favouritesId', JSON.stringify(this.state.favouritesId))
+                this.favouritesLength()
+            })
+        }
+    }
+
+    favouritesLength(){
+        this.props.favouritesLength(this.state.favouritesId)
+    }
 
 
     render(){
 
         let display;
         if(this.state.searchResult !== null){
-            display = <Display searchResult={this.state.searchResult}/>
+            display = <Display searchResult={this.state.searchResult} favouriteId={(id)=>this.favouriteId(id)}/>
         }
         else{
             display = <h1>No search result</h1>
