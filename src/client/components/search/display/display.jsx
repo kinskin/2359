@@ -9,7 +9,6 @@ export default class Display extends React.Component{
     }
 
     render(){
-        console.log(this.props.searchResult)
         let results;
         if(this.props.searchResult !== ''){
             results = this.props.searchResult.map((result,index)=>{

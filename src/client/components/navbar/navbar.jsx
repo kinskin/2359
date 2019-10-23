@@ -13,7 +13,6 @@ class Navbar extends React.Component{
     };
 
     render(){
-        console.log('this is the favourites props: ...... ', this.props.favourites)
         let favouriteNumber;
         if(this.props.favourites === ''){
             favouriteNumber = <p onClick={()=>this.favouritesHandler()}>Favourites</p>
