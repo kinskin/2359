@@ -10,11 +10,22 @@ export default class Search extends React.Component{
         super()
         this.state = {
             searchValue: '',
-            apiKey: '7i4KgSemwP8WZSYtPePlpVoVbJeHE8EO'
+            apiKey: '7i4KgSemwP8WZSYtPePlpVoVbJeHE8EO',
+            searchResult: ''
         }
     }
 
     searchValue(value){
+        let searchValue = JSON.parse(localStorage.getItem(value));
+        if(searchValue === null){
+            this.getData(value)
+        }
+        else{
+            this.setState({searchResult:searchValue})
+        }
+    };
+
+    getData(value){
         let apiKey = this.state.apiKey
         let url = `http://api.giphy.com/v1/gifs/search?q=${value}&api_key=${apiKey}`
         fetch(url,{
@@ -24,7 +35,9 @@ export default class Search extends React.Component{
             }
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => this.setState({searchResult:data.data}))
+        .then(()=>
+            localStorage.setItem(value,JSON.stringify(this.state.searchResult)))
         .catch(err => console.log('error: ', err))
     }
 
@@ -32,10 +45,18 @@ export default class Search extends React.Component{
 
     render(){
 
+        let display;
+        if(this.state.searchResult !== null){
+            display = <Display searchResult={this.state.searchResult}/>
+        }
+        else{
+            display = <h1>No search result</h1>
+        }
+
         return(
             <div>
                 <Form searchValue={(value)=>{this.searchValue(value)}}/>
-                <Display/>
+                {display}
             </div>
         );
     };
