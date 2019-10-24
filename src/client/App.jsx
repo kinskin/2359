@@ -41,13 +41,17 @@ class App extends React.Component {
         this.setState({favouritesLength: value.length})
     }
 
+    updateFavLength(value){
+        this.setState({favouritesLength: value})
+    }
+
     render() {
 
         let display;
         if(this.state.showSearch === true && this.state.showFavourites === false){
             display = <Search favouritesLength={(value)=>{this.favouritesLength(value)}}/>;
         } else {
-            display = <Favourites />;
+            display = <Favourites updateFavLength={(value)=>{this.updateFavLength(value)}}/>;
         }
 
         return (

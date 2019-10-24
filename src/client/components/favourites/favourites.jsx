@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './style.scss';
 
-import Display from './display/display.jsx'
+import Favdisplay from './favdisplay/favdisplay.jsx'
 
 export default class Favourites extends React.Component{
 
@@ -36,10 +36,23 @@ export default class Favourites extends React.Component{
         }
     }
 
+    imgClickHandler(id){
+        let favouritesId = JSON.parse(localStorage.getItem('favouritesId'))
+        let favourites = this.state.favourites
+        let favouritesIndex = favourites.findIndex(favourite=>favourite.id === id)
+        let favouritesIdIndex = favouritesId.findIndex(favouriteId=>favouriteId === id)
+        favouritesId.splice(favouritesIdIndex,1)
+        favourites.splice(favouritesIndex,1)
+        this.setState({favourites: favourites},()=>{
+            localStorage.setItem('favouritesId',JSON.stringify(favouritesId))
+            this.props.updateFavLength(favouritesId.length)
+        })
+    }
+
     render(){
         let display;
         if(this.state.favourites.length > 0){
-            display = <Display favourites={this.state.favourites}/>
+            display = <Favdisplay favourites={this.state.favourites} imgClickHandler={(id)=>{this.imgClickHandler(id)}}/>
         }
         else{
             display = <p> No favourites images </p>
